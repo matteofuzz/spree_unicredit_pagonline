@@ -99,7 +99,8 @@ class UnicreditPagonlineController < Spree::BaseController
     end   
   end  
   
-  def result_ok             
+  def result_ok          
+    logger.info "UnicreditPagonlineController#resilt_ok : #{params.inspect}"   
     # load order and payment method  
     begin
       @order = Order.find_by_number(params[:numeroOrdine])
@@ -109,6 +110,7 @@ class UnicreditPagonlineController < Spree::BaseController
       @order.payment.started_processing      
     rescue
       flash[:error] = "ERRORE nei parametri ricevuti da PagOnline: #{params.inspect}"
+      logger.info "UnicreditPagonlineController#resilt_ok : ERRORE caricando i dati: #{@order} #{@payment_method} #{stringaSegreta}"
       redirect_to checkout_state_url(:payment)  
     end
     # make string for MAC code
@@ -126,9 +128,11 @@ class UnicreditPagonlineController < Spree::BaseController
       @order.next
       @order.save
       session[:order_id] = nil
+      logger.info "UnicreditPagonlineController#resilt_ok : tutto OK, ordine completato, #{@order.inspect}"
       redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("unicredit_pagonline_payment_success")  
     else                                    
       @order.payment.fail
+      logger.info "UnicreditPagonlineController#resilt_ok : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]}"
       flash[:error] = "Mac code non corretto. Operazione annullata."
       redirect_to checkout_state_url(:payment)
     end
