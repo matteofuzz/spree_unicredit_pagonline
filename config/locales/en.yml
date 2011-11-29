@@ -1,0 +1,9 @@
+---
+en: 
+  payment_text: Payment PagOnline by Unicredit
+  payment_test: (TEST server)
+  order_summary: Summary order n.
+  confirm_payment: Confirm payment
+  confirm_msg: Confirming will be redirected to the site of Unicredit Pagonline.
+  cancel_and_back: Cancel and go back 
+  unicredit_pagonline_payment_success: Unicredit PagOnline payment successfull. 

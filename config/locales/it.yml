@@ -1,0 +1,9 @@
+---
+it: 
+  payment_text: Pagamento tramite PagOnline di Unicredito
+  payment_test: (server di TEST)
+  order_summary: Riepilogo Ordine n.
+  confirm_payment: Conferma il pagamento
+  confirm_msg: Confermando verrete reindirizzati al sito di Unicredito Pagonline.
+  cancel_and_back: Annulla e torna indietro     
+  unicredit_pagonline_payment_success: Pagamento con Unicredit PagOnline completato con successo.

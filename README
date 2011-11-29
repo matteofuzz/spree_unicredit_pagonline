@@ -1,0 +1,38 @@
+SpreeUnicreditPagonline
+==============
+by Matteo Folin <matteo.folin@gmail.com> <info@f5lab.com> - http://f5lab.com - November 2011
+
+Spree extension for use PagOnline of Unicredit as BillingIntegration.
+
+Tested with Spree 0.60.4
+
+Config
+=======
+# add gem to Gemfile:
+	gem "spree_unicredit_pagonline", :git => 'git://github.com/matteofuzz/spree-unicredit_pagonline.git'
+
+# bundle
+	bundle install
+
+# Copies all assets (NOTE: This will be obsolete with Rails 3.1)
+	rake spree_unicredit_pagonline:install:assets
+
+
+Settings:
+=======
+It manage test and live UnicreditPagonline accounts, just set server and login preferences in /admin/payment_methods/new.
+
+/admin/payment_methods:
+	name: "Banca Sella UnicreditPagonline" or "Banca Sella UnicreditPagonline TEST" or "Banca Sella UnicreditPagonline LIVE" (for css )
+	provider: BillingIntegration::UnicreditPagonline
+	server: test / live
+	login: codice esercente
+
+In UnicreditPagonline Backoffice, https://testecomm.sella.it/GestPay/BackOffice/Menu.asp or https://ecomm.sella.it/GestPay/BackOffice/Menu.asp, you must set these data:
+	ip: of your server
+	URL per risposta positiva: https://your-domain/unicredit_pagonline/comeback
+	URL per risposta negativa: https://your-domain/unicredit_pagonline/comeback
+	URL Server to Server: https://your-domain/unicredit_pagonline/comeback_s2s/test or https://your-domain/unicredit_pagonline/comeback_s2s/live
+	
+
+Copyright (c) 2011 Matteo Folin - F5lab.com, released under the New BSD License
