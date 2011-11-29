@@ -37,10 +37,33 @@ It manage test and live UnicreditPagonline accounts, just set server and login p
 	url_ko: https://DOMINIO_NEGOZIO/unicredit_pagonline/ko
 	stringa_segreta: (ambiente di test: b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1) 
 
+  ---------------------------
+  AMBIENTE DI TEST:
 
+  Applicazione di Back-office (utilizzo lato esercente)  https://pagamenti.unicredito.it/backoffice/
+  Login: 9999888
+  Password: 9999888
+  Esercente: 9999888
+  Stabilimento: 99988
 
-In Unicredit Pagonline Backoffice, https://pagamenti.unicredito.it/backoffice/login.jsp, you must set these data:
-	IP: ip del server dell'esercente;
-	Listener: https://DOMINIO_NEGOZIO/unicredit_pagonline/eventlistener
+  Pagamento con carta di credito (utilizzo lato acquirente): https://pagamenti.unicredito.it/demo/democarta.html
+  Pagamento con conto corrente on-line (utilizzo lato acquirente): https://pagamenti.unicredito.it/demo/demo.html
+
+  Per testare i pagamenti è possibile utilizzare i dati della seguente carta di prova:
+  Titolare: Nome a piacere
+  Tipo: VISA
+  Nr. Carta: 4444499922200000
+  Scadenza: 11/2019
+  CVV2: 999
+
+  Le transazioni effettuate con tale carta pur non venendo effettivamente elaborati daranno esito positivo per importi inferiori a 100 €, simulando in tutto e per tutto una reale operazione.
+  Per importi superiori l’esito della transazione sarà negativo per permettere di testare tutte l’eventualità.
+  Gli ordini relativi potranno essere gestiti dal back-office.
+  
+  
+  ---------------------------
+  In Unicredit Pagonline Backoffice, https://pagamenti.unicredito.it/backoffice/login.jsp, you must set these data:
+	  IP: ip del server dell'esercente;
+	  Listener: https://DOMINIO_NEGOZIO/unicredit_pagonline/eventlistener
 
 Copyright (c) 2011 Matteo Folin - F5lab.com, released under the New BSD License
