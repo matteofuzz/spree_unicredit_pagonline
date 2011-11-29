@@ -23,16 +23,24 @@ Settings:
 It manage test and live UnicreditPagonline accounts, just set server and login preferences in /admin/payment_methods/new.
 
 /admin/payment_methods:
-	name: "Banca Sella UnicreditPagonline" or "Banca Sella UnicreditPagonline TEST" or "Banca Sella UnicreditPagonline LIVE" (for css )
+	name: "PagOnline" (for css )
 	provider: BillingIntegration::UnicreditPagonline
-	server: test / live
-	login: codice esercente
+	numero_commerciante: (ambiente di test: 9999888) 
+	stabilimento: (ambiente di test: 99888 oppure 99988)
+	user_id: (ambiente di test: 9999888) 
+	password: (ambiente di test: 9999888) 
+	valuta: 978 (per l'euro)
+	flag_ricicla_ordine: (false)
+	flag_deposito: (true)
+	tipo_risposta_apv: click 
+	url_ok: https://DOMINIO_NEGOZIO/unicredit_pagonline/ok
+	url_ko: https://DOMINIO_NEGOZIO/unicredit_pagonline/ko
+	stringa_segreta: (ambiente di test: b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1) 
 
-In UnicreditPagonline Backoffice, https://testecomm.sella.it/GestPay/BackOffice/Menu.asp or https://ecomm.sella.it/GestPay/BackOffice/Menu.asp, you must set these data:
-	ip: of your server
-	URL per risposta positiva: https://your-domain/unicredit_pagonline/comeback
-	URL per risposta negativa: https://your-domain/unicredit_pagonline/comeback
-	URL Server to Server: https://your-domain/unicredit_pagonline/comeback_s2s/test or https://your-domain/unicredit_pagonline/comeback_s2s/live
-	
+
+
+In Unicredit Pagonline Backoffice, https://pagamenti.unicredito.it/backoffice/login.jsp, you must set these data:
+	IP: ip del server dell'esercente;
+	Listener: https://DOMINIO_NEGOZIO/unicredit_pagonline/eventlistener
 
 Copyright (c) 2011 Matteo Folin - F5lab.com, released under the New BSD License
