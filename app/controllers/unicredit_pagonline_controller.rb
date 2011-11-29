@@ -1,5 +1,5 @@
 class UnicreditPagonlineController < Spree::BaseController
-  #skip_before_filter :verify_authenticity_token, :only => [:comeback, :comeback_s2s]
+  ssl_required
   
   def show
     if params[:payment_method_id] and PaymentMethod.exists? params[:payment_method_id]
