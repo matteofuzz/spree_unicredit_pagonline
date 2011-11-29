@@ -20,7 +20,7 @@ Config
 
 Settings:
 =======
-It manage test and live UnicreditPagonline accounts, just set server and login preferences in /admin/payment_methods/new.
+It manage test and live UnicreditPagonline accounts, just set preferences.
 
 /admin/payment_methods:
 	name: "PagOnline" (for css )
