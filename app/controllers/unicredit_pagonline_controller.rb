@@ -86,7 +86,7 @@ class UnicreditPagonlineController < Spree::BaseController
     inputMac << "&numeroCommerciante=#{params[:numeroCommerciante]}" 
     inputMac << "&stabilimento=#{params[:stabilimento]}" 
     inputMac << "&esito=#{params[:esito]}"               
-    inputMac << "&#{stringaSegreta.strip}"
+    inputMac << "&#{stringaSegreta.to_s.strip}"
   	# Compute MAC code
     mac = mac_code(inputMac)
   	# test the MAC param
