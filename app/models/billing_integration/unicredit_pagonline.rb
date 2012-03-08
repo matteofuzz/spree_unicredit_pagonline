@@ -14,4 +14,8 @@ class BillingIntegration::UnicreditPagonline < BillingIntegration
   def provider_class
     ActiveMerchant::Billing::Integrations::UnicreditPagonline
   end
+  
+  def source_required?
+    false
+  end
 end
