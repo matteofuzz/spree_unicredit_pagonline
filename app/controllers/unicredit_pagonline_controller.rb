@@ -154,7 +154,8 @@ class UnicreditPagonlineController < Spree::BaseController
     end  
     return unless @order
     # make string for MAC code
-    inputMac = request.fullpath.gsub(/^.*eventlistener\?/,'').gsub(/&mac=.*$/, '') 
+    input_string = request.fullpath.gsub(/^.*eventlistener\?/,'').gsub(/&mac=.*$/, '') 
+    inputMac = CGI::unescape(input_string)
     inputMac << "&#{stringaSegreta.to_s.strip}" 
   	# Compute MAC code
     mac = mac_code(inputMac)  
