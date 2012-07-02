@@ -157,8 +157,7 @@ class UnicreditPagonlineController < Spree::BaseController
     inputMac = request.fullpath.gsub(/^.*eventlistener\?/,'').gsub(/&mac=.*$/, '') 
     inputMac << "&#{stringaSegreta.to_s.strip}" 
   	# Compute MAC code
-    mac = mac_code(inputMac) 
-       debugger
+    mac = mac_code(inputMac)  
   	# test the MAC param
   	if mac == params[:mac]
       # mac ok 
@@ -216,7 +215,7 @@ class UnicreditPagonlineController < Spree::BaseController
       end
     else
       # mac errato 
-      logger.info "UnicreditPagonlineController#eventlistener : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]}" 
+      logger.info "UnicreditPagonlineController#eventlistener : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]} (inputMac=#{inputMac})" 
       @msg = "UnicreditPagonlineController#eventlistener : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]}"
     end    
     render :text => @msg
