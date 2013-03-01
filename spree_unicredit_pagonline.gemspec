@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_unicredit_pagonline'
-  s.version     = '1.0.0'
-  s.summary     = 'Add gem summary here'
+  s.version     = '1.3.2'
+  s.summary     = 'Spree commerce extension for Unicredit PagOnline'
   s.description = 'Spree commerce extension for Unicredit PagOnline'
-  s.required_ruby_version = '>= 1.8.7'
+  s.required_ruby_version = '>= 1.9.2'
 
   s.author            = 'Matteo Folin'
   s.email             = 'mfolin@f5lab.com'
@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = true
 
-  s.add_dependency('spree_core', '>= 0.50.4')
+  s.add_dependency('spree_core', '>= 1.3.2')
 end

@@ -4,7 +4,7 @@ by Matteo Folin <matteo.folin@gmail.com> <info@f5lab.com> - http://f5lab.com - N
 
 Spree extension for use PagOnline of Unicredit as BillingIntegration.
 
-Tested with Spree 0.60.4
+Tested with Spree 1.3.2
 
 Config
 =======
