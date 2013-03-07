@@ -1,10 +1,12 @@
 # encoding: utf-8 
-class UnicreditPagonlineController < Spree::BaseController
+class UnicreditPagonlineController < Spree::StoreController
   ssl_required
+  helper 'spree/orders'
   
   def show
-    if params[:payment_method_id] and PaymentMethod.exists? params[:payment_method_id]
-      @payment_method = PaymentMethod.find params[:payment_method_id]
+    @body_id = "unicredit"
+    if params[:payment_method_id] and Spree::PaymentMethod.exists? params[:payment_method_id]
+      @payment_method = Spree::PaymentMethod.find params[:payment_method_id]
     else
       flash[:error] = "ERRORE, parametro payment_method_id errato, il metodo di pagamento con id=#{params[:payment_method_id]} non esiste !"
       redirect_to checkout_state_url(:payment)
@@ -24,8 +26,8 @@ class UnicreditPagonlineController < Spree::BaseController
     stringaSegreta = @payment_method.preferred_stringa_segreta 
     
     # Order data
-    if params[:order_id] and Order.exists? params[:order_id]
-      @order = Order.find params[:order_id]
+    if params[:order_id] and Spree::Order.exists? params[:order_id]
+      @order = Spree::Order.find params[:order_id]
     else
       flash[:error] = "ERRORE, parametro order_id errato, l'ordine id=#{params[:order_id]} non esiste !"
       redirect_to checkout_state_url(:payment)
@@ -75,12 +77,13 @@ class UnicreditPagonlineController < Spree::BaseController
   def result_ko  
     # load order and payment method  
     begin
-      @order = Order.find_by_number(params[:numeroOrdine])
+      @order = Spree::Order.find_by_number(params[:numeroOrdine])
       @payment_method = @order.payment_method
       stringaSegreta = @payment_method.preferred_stringa_segreta       
     rescue
       flash[:error] = "ERRORE nei parametri ricevuti da PagOnline: #{params.inspect}"
       redirect_to checkout_state_url(:payment)  
+      return
     end      
     # make string for MAC code
     inputMac  = "numeroOrdine=#{params[:numeroOrdine]}" 
@@ -94,9 +97,11 @@ class UnicreditPagonlineController < Spree::BaseController
   	if mac == params[:mac]
       flash[:error] = "Esito transazione con Unicredito PagOnline negativo."
       redirect_to checkout_state_url(:payment)    
+      return
     else
       flash[:error] = "Mac code non corretto. Operazione annullata."
       redirect_to checkout_state_url(:payment)
+      return
     end   
   end  
   
@@ -104,7 +109,7 @@ class UnicreditPagonlineController < Spree::BaseController
     logger.info "UnicreditPagonlineController#result_ok:params: #{params.inspect}"   
     # load order and payment method  
     begin
-      @order = Order.find_by_number(params[:numeroOrdine])
+      @order = Spree::Order.find_by_number(params[:numeroOrdine])
       @payment_method = @order.payment_method
       stringaSegreta = @payment_method.preferred_stringa_segreta       
       # set order state = processing
@@ -145,7 +150,7 @@ class UnicreditPagonlineController < Spree::BaseController
     # load order and payment method  
     logger.info "UnicreditPagonlineController#eventlistener ha ricevuto questi parametri: #{params.inspect} "
     begin
-      @order = Order.find_by_number(params[:numeroOrdine])
+      @order = Spree::Order.find_by_number(params[:numeroOrdine])
       @payment_method = @order.payment_method
       stringaSegreta = @payment_method.preferred_stringa_segreta       
     rescue  

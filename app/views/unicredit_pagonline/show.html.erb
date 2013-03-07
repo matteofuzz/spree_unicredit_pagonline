@@ -1,7 +1,7 @@
 <div class="clear"></div>     
 
 <fieldset id='payment' class='unicredit_pagonline'>
-  <% form_tag @form_url do -%>
+  <%= form_tag @form_url do -%>
 
   <h2 class="title"><%= t(:payment_text) %> <% if @server == "test" %><%= t(:payment_test) %><% end %></h2>
 	<div id="unicredit_pagonline_logos">
@@ -11,13 +11,14 @@
   <fieldset id="order_details">
     <div class="clear"></div>
     <legend><%= t(:order_summary) %><%= @order.number %></legend>
-    <%= render :partial => 'shared/order_details', :locals => {:order => @order} -%>
+    <%= render :partial => 'spree/shared/order_details', :locals => {:order => @order} -%>
   </fieldset>
 
-
-	<%= submit_tag t(:confirm_payment) %>
+  <br>
+	<%= submit_tag t(:confirm_payment), :class => "button primary" %>
 	<p id="unicredit_pagonline_description_text"><%= t(:confirm_msg) %></p> 
   <% end %>
 </fieldset>
 
+<br>
 <%= link_to t(:cancel_and_back), checkout_state_url(:payment), :class => "unicredit_pagonline link cancel" %>
