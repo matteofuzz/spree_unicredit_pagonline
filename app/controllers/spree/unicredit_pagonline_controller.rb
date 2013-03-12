@@ -107,7 +107,7 @@ module Spree
     end  
   
     def result_ok          
-      logger.info "UnicreditPagonlineController#result_ok:params: #{params.inspect}"   
+      Rails.logger.info "UnicreditPagonlineController#result_ok:params: #{params.inspect}"   
       # load order and payment method  
       begin
         @order = Spree::Order.find_by_number(params[:numeroOrdine])
@@ -117,7 +117,7 @@ module Spree
         @order.payment.started_processing      
       rescue
         flash[:error] = "ERRORE nei parametri ricevuti da PagOnline: #{params.inspect}"
-        logger.info "UnicreditPagonlineController#result_ok : ERRORE caricando i dati: #{@order} #{@payment_method} #{stringaSegreta}"
+        Rails.logger.info "UnicreditPagonlineController#result_ok : ERRORE caricando i dati: #{@order} #{@payment_method} #{stringaSegreta}"
         redirect_to checkout_state_url(:payment)  
         return
       end
@@ -136,11 +136,11 @@ module Spree
         @order.next
         @order.save
         session[:order_id] = nil
-        logger.info "UnicreditPagonlineController#result_ok : tutto OK, ordine completato, #{@order.inspect}"
+        Rails.logger.info "UnicreditPagonlineController#result_ok : tutto OK, ordine completato, #{@order.inspect}"
         redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("unicredit_pagonline_payment_success")  
       else                                    
         @order.payment.fail
-        logger.info "UnicreditPagonlineController#result_ok : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]}"
+        Rails.logger.info "UnicreditPagonlineController#result_ok : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]}"
         flash[:error] = "Mac code non corretto. Operazione annullata."
         redirect_to checkout_state_url(:payment)
       end
@@ -149,13 +149,13 @@ module Spree
     def eventlistener    
       @msg = "UnicreditPagonlineController#eventlistener" 
       # load order and payment method  
-      logger.info "UnicreditPagonlineController#eventlistener ha ricevuto questi parametri: #{params.inspect} "
+      Rails.logger.info "UnicreditPagonlineController#eventlistener ha ricevuto questi parametri: #{params.inspect} "
       begin
         @order = Spree::Order.find_by_number(params[:numeroOrdine])
         @payment_method = @order.payment_method
         stringaSegreta = @payment_method.preferred_stringa_segreta       
       rescue  
-        logger.info = "ERRORE nei parametri ricevuti da UnicreditPagonlineController#eventlistener: #{params.inspect}"
+        Rails.logger.info = "ERRORE nei parametri ricevuti da UnicreditPagonlineController#eventlistener: #{params.inspect}"
         @msg = "ERRORE nei parametri ricevuti da UnicreditPagonlineController#eventlistener: #{params.inspect}" 
       end  
       return unless @order
@@ -175,41 +175,41 @@ module Spree
             unless @order.payment.completed?
               @order.payment.started_processing
               @order.payment.complete    
-              logger.info "UnicreditPagonlineController#eventlistener : Pagamento confermato e completato" 
+              Rails.logger.info "UnicreditPagonlineController#eventlistener : Pagamento confermato e completato" 
               @msg = "UnicreditPagonlineController#eventlistener : Pagamento confermato e completato"
             end
             unless @order.completed?
               @order.state = "complete"
               @order.save
               @order.finalize! 
-              logger.info "UnicreditPagonlineController#eventlistener : Ordine completato" 
+              Rails.logger.info "UnicreditPagonlineController#eventlistener : Ordine completato" 
               @msg = "UnicreditPagonlineController#eventlistener : Ordine completato"
             end  
           when 'IC'  
             unless @order.payment.completed?
               @order.payment.started_processing
               @order.payment.complete   
-              logger.info "UnicreditPagonlineController#eventlistener : Pagamento confermato e completato" 
+              Rails.logger.info "UnicreditPagonlineController#eventlistener : Pagamento confermato e completato" 
               @msg = "UnicreditPagonlineController#eventlistener : Pagamento confermato e completato"
             end
             unless @order.completed?
               @order.state = "complete"
               @order.save
               @order.finalize! 
-              logger.info "UnicreditPagonlineController#eventlistener : Ordine completato" 
+              Rails.logger.info "UnicreditPagonlineController#eventlistener : Ordine completato" 
               @msg = "UnicreditPagonlineController#eventlistener : Ordine completato"
             end
           when 'KO'   
             unless @order.payment.failed?
               @order.payment.started_processing
               @order.payment.fail   
-              logger.info "UnicreditPagonlineController#eventlistener : Pagamento fallito" 
+              Rails.logger.info "UnicreditPagonlineController#eventlistener : Pagamento fallito" 
               @msg = "UnicreditPagonlineController#eventlistener : Pagamento fallito"
             end 
             if @order.completed?
               @order.state = "payment"
               @order.save   
-              logger.info "UnicreditPagonlineController#eventlistener : Ordine NON completo perchè il pagamento è fallito" 
+              Rails.logger.info "UnicreditPagonlineController#eventlistener : Ordine NON completo perchè il pagamento è fallito" 
               @msg = "UnicreditPagonlineController#eventlistener : Ordine NON completo perchè il pagamento è fallito"
             end
           else
@@ -222,7 +222,7 @@ module Spree
         end
       else
         # mac errato 
-        logger.info "UnicreditPagonlineController#eventlistener : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]} (inputMac=#{inputMac})" 
+        Rails.logger.info "UnicreditPagonlineController#eventlistener : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]} (inputMac=#{inputMac})" 
         @msg = "UnicreditPagonlineController#eventlistener : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]}"
       end    
       render :text => @msg
