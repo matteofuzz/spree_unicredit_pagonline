@@ -137,7 +137,7 @@ module Spree
         @order.save
         session[:order_id] = nil
         Rails.logger.info "UnicreditPagonlineController#result_ok : tutto OK, ordine completato, #{@order.inspect}"
-        redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("unicredit_pagonline_payment_success")  
+        redirect_to order_url(@order, {:checkout_complete => true, :token => @order.token}), :notice => I18n.t("unicredit_pagonline_payment_success")  
       else                                    
         @order.payment.fail
         Rails.logger.info "UnicreditPagonlineController#result_ok : ERRORE, mac errato, calcolato=#{mac} param=#{params[:mac]}"
